@@ -75,8 +75,12 @@ WSGI_APPLICATION = '4dv652_backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': '4dv652',
+        'USER': 'postgres',
+        'PASSWORD': 'WHhif21evq_Jn7A_mbJv_uM',
+        'HOST': '46.101.216.188',
+        'PORT': '5432',
     }
 }
 
