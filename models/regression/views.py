@@ -1,10 +1,5 @@
-from models.regression.serializers import LRRequestSerializer
 from rest_framework import views
 from rest_framework.response import Response
-
-from django.shortcuts import render
-from django.http.response import JsonResponse
-from rest_framework.parsers import JSONParser
 
 from models.regression.linear_regression import LinearRegression
 from models.regression.serializers import LRRequestSerializer
