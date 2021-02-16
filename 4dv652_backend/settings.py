@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # My Apps
     'rest_framework',
-    'models.regression',
     'scores'
 ]
 

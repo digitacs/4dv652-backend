@@ -2,7 +2,6 @@ from rest_framework import views
 from rest_framework.response import Response
 
 from models.regression.linear_regression import LinearRegression
-from models.regression.serializers import LRRequestSerializer
 from models.regression.models import LRRequest
 
 
