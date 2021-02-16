@@ -19,6 +19,5 @@ from django.contrib import admin
 
 urlpatterns = [
     #path('admin/', admin.site.urls),
-    path("api/v1/models/", include("models.regression.urls")),
     path("api/v1/scores", include("scores.urls")),
 ]
