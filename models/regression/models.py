@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 
 
@@ -10,8 +11,8 @@ class LRRequest(models.Model):
         created_at: The date when request was created.
         score: The response of the ML algorithm: a score of how good the movement was.
     '''
-    Id = models.UUIDField(primary_key=True)
-    created_at = models.DateTimeField(auto_now_add=True, blank=True)
+    Id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    created_at = models.DateTimeField(auto_now_add=True)
     aimoscore = models.DecimalField(
         null=True, blank=True, max_digits=25, decimal_places=24)
     No_1_Angle_Deviation = models.DecimalField(
