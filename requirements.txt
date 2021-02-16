@@ -43,7 +43,6 @@ simpy==4.0.1
 six==1.15.0
 sqlparse==0.4.1
 statsmodels==0.12.1
-TBB==0.1
 threadpoolctl==2.1.0
 toml==0.10.2
 tornado==6.1
