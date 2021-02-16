@@ -20,5 +20,5 @@ from django.urls import include, path
 urlpatterns = [
     #path('admin/', admin.site.urls),
     #path("api/v1/models/", include("models.regression.urls"))
-    path("api/v1/models/", include("regression.urls"))
+    path("api/v1/models/regression", include("regression.urls"))
 ]
