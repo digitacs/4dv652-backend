@@ -7,7 +7,10 @@ from scores.models import LRRequest
 
 
 class PredictView(views.APIView):
-    def post(self, request, format=None):
+    def get(self, request):
+        return Response('')
+
+    def post(self, request):
         model = LinearRegression()
         score = model.predict(request.data)
 

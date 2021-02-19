@@ -98,3 +98,4 @@ class LRRequest(models.Model):
     estimatedscore = models.DecimalField(
         null=True, blank=True, max_digits=25, decimal_places=24)
     score = models.DecimalField(max_digits=25, decimal_places=24)
+    patient_id = models.CharField(max_length=200, default="0")
