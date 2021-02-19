@@ -6,7 +6,7 @@ from scores.serializers import LRRequestSerializer
 from scores.models import LRRequest
 
 
-class PredictView(views.APIView):
+class Version1(views.APIView):
     def get(self, request):
         return Response('')
 
@@ -58,6 +58,11 @@ class PredictView(views.APIView):
         r.No_2_Time_Deviation = request.data.get("No_2_Time_Deviation")
         r.score = score[0]
 
-        # r.save()
+        r.save()
 
         return Response({"score": score})
+
+
+class Version2(views.APIView):
+    def post(self, request):
+        return Response({"score": 0})

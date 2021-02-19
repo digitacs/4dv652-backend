@@ -1,7 +1,8 @@
 from django.urls import path
-from scores import views
+from . import views
 
+app_name = 'scores'
 urlpatterns = [
-    #path("", views.ScoreList.as_view()),
-    path("", views.PredictView.as_view())
+    path("v1/scores", views.Version1.as_view()),
+    path("v2/scores", views.Version2.as_view())
 ]
