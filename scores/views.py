@@ -2,7 +2,7 @@ from rest_framework import views
 from rest_framework.response import Response
 
 from models.regression.linear_regression import LinearRegression
-from scores.serializers import LRRequestSerializer
+from models.classification.logistic_regression import LogisticRegression
 from scores.models import LRRequest
 
 
@@ -65,4 +65,9 @@ class Version1(views.APIView):
 
 class Version2(views.APIView):
     def post(self, request):
-        return Response({"score": 0})
+        regression_model = LinearRegression()
+        score = regression_model.predict(request.data)
+
+        classification_model = LogisticRegression()
+
+        return Response({"score": score, "weakest_link": "LeftArmFallForward"})
