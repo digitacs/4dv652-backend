@@ -25,10 +25,10 @@ class Version2(views.APIView):
     def post(self, request):
         regression_model = LinearRegression()
         score = regression_model.predict(request.data)
-        if score < 0:
-            score = 0.0
-        elif score > 1:
-            score = 1.0
+        if score[0] < 0:
+            score[0] = 0.0
+        elif score[0] > 1:
+            score[0] = 1.0
 
         classification_model = LogisticRegression()
         weakest_link = classification_model.predict(request.data)
