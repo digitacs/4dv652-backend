@@ -1,9 +1,6 @@
 import os
 import joblib
-import numpy as np
 import pandas as pd
-import statsmodels.api as sm
-import scipy.stats as stats
 
 
 class LogisticRegression:
