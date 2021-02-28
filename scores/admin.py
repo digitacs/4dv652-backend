@@ -1,5 +1,5 @@
 from django.contrib import admin
 
-from .models import LRRequest
+from .models import Request
 
-admin.site.register(LRRequest)
+admin.site.register(Request)
