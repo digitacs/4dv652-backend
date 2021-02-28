@@ -176,11 +176,4 @@ class LinearRegression:
 
     def predict(self, input_data):
         x = self.preprocessing(input_data)
-        score = self.model.predict(x)[0]
-
-        if score < 0:
-            return 0.0
-        elif score > 1:
-            return 1.0
-
-        return score
+        return self.model.predict(x)

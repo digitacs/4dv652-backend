@@ -1,11 +1,10 @@
 import uuid
-
 from django.db import models
 
 
-class Request(models.Model):
+class LRRequest(models.Model):
     '''
-    Representing all requests to the API, including the input data and model outputs.
+    The LRRequest keep information about all requests to the ML Linear Regression algorithm.
 
     Attributes:
         Id: Unique Id to identify requests.
@@ -13,12 +12,9 @@ class Request(models.Model):
         score: The response of the ML algorithm: a score of how good the movement was.
     '''
     Id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    patient_id = models.CharField(max_length=200, default="0")
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    score = models.DecimalField(max_digits=25, decimal_places=24)
-    weakest_link = models.CharField(max_length=200)
-    # Input data variables
+    aimoscore = models.DecimalField(
+        null=True, blank=True, max_digits=25, decimal_places=24)
     No_1_Angle_Deviation = models.DecimalField(
         max_digits=25, decimal_places=24)
     No_2_Angle_Deviation = models.DecimalField(
@@ -99,8 +95,7 @@ class Request(models.Model):
         max_digits=25, decimal_places=24)
     No_2_Time_Deviation = models.DecimalField(
         max_digits=25, decimal_places=24)
-    # Extra values from original dataset
-    aimoscore = models.DecimalField(
-        null=True, blank=True, max_digits=25, decimal_places=24)
     estimatedscore = models.DecimalField(
         null=True, blank=True, max_digits=25, decimal_places=24)
+    score = models.DecimalField(max_digits=25, decimal_places=24)
+    patient_id = models.CharField(max_length=200, default="0")

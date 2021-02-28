@@ -1,35 +1,43 @@
-from rest_framework import generics
+from rest_framework import views
 from rest_framework.response import Response
 
 from models.regression.linear_regression import LinearRegression
 from models.classification.logistic_regression import LogisticRegression
-from scores.models import Request
-from scores.serializers import RequestSerializer
+from scores.models import LRRequest
 
 
-class Version1(generics.CreateAPIView):
+class Version1(views.APIView):
+    def get(self, request):
+        return Response('')
+
     def post(self, request):
         model = LinearRegression()
         score = model.predict(request.data)
 
+        r = getLRRequest(request.data, score)
+
+        r.save()
+
         return Response({"score": score})
 
 
-class Version2(generics.CreateAPIView):
+class Version2(views.APIView):
     def post(self, request):
         regression_model = LinearRegression()
         score = regression_model.predict(request.data)
+        if score[0] < 0:
+            score[0] = 0.0
+        elif score[0] > 1:
+            score[0] = 1.0
 
         classification_model = LogisticRegression()
         weakest_link = classification_model.predict(request.data)
-
-        serializer_class = RequestSerializer()
 
         return Response({"score": score, "weakest_link": weakest_link})
 
 
 def getLRRequest(new_data, new_score):
-    new_r = Request
+    new_r = LRRequest
 
     new_r.No_1_Angle_Deviation = new_data.get("No_1_Angle_Deviation")
     new_r.No_2_Angle_Deviation = new_data.get("No_2_Angle_Deviation")
@@ -71,4 +79,4 @@ def getLRRequest(new_data, new_score):
     new_r.No_25_NASM_Deviation = new_data.get("No_25_NASM_Deviation")
     new_r.No_1_Time_Deviation = new_data.get("No_1_Time_Deviation")
     new_r.No_2_Time_Deviation = new_data.get("No_2_Time_Deviation")
-    new_r.score = new_score
+    new_r.score = new_score[0]
