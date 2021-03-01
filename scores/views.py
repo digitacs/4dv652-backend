@@ -1,6 +1,6 @@
 from rest_framework.generics import CreateAPIView
-from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
+from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 
 from models.regression.linear_regression import LinearRegression
 from models.classification.logistic_regression import LogisticRegression
@@ -19,13 +19,20 @@ class Version1(CreateAPIView):
 class Version2(CreateAPIView):
     def create(self, request, *args, **kwargs):
 
-        regression_model = LinearRegression()
-        score = regression_model.predict(request.data)
-        classification_model = LogisticRegression()
-        weakest_link = classification_model.predict(request.data)[0]
         serializer_class = RequestSerializer()
+        input_data = request.data
+        if not all(value > 0 for value in input_data.values()):
+            return Response({'message': 'Input values must be larger than 0'}, status=HTTP_400_BAD_REQUEST)
 
-        return Response({"score": score, "weakest_link": weakest_link})
+        try:
+            regression_model = LinearRegression()
+            score = regression_model.predict(input_data)
+            classification_model = LogisticRegression()
+            weakest_link = classification_model.predict(input_data)[0]
+        except KeyError as error:
+            return Response({'message': str(error)}, status=HTTP_400_BAD_REQUEST)
+
+        return Response({'score': score, 'weakest_link': weakest_link}, status=HTTP_200_OK)
 
 
 def save_request(new_data, new_score):
