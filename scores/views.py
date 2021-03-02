@@ -21,8 +21,12 @@ class Version2(CreateAPIView):
 
         serializer_class = RequestSerializer()
         input_data = request.data
-        if not all(value > 0 for value in input_data.values()):
-            return Response({'message': 'Input values must be larger than 0'}, status=HTTP_400_BAD_REQUEST)
+        if all(value == 0 for value in input_data.values()):
+            return Response({'error': {
+                'status': 400,
+                'message': 'Input values must be larger than 0'
+            }
+            }, status=HTTP_400_BAD_REQUEST)
 
         try:
             regression_model = LinearRegression()
@@ -30,7 +34,11 @@ class Version2(CreateAPIView):
             classification_model = LogisticRegression()
             weakest_link = classification_model.predict(input_data)[0]
         except KeyError as error:
-            return Response({'message': str(error)}, status=HTTP_400_BAD_REQUEST)
+            return Response({'error': {
+                'status': 400,
+                'message': str(error)
+            }
+            }, status=HTTP_400_BAD_REQUEST)
 
         return Response({'score': score, 'weakest_link': weakest_link}, status=HTTP_200_OK)
 
