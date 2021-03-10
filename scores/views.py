@@ -3,12 +3,19 @@ from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 
 from models.regression.linear_regression import LinearRegression
+from models.regression.random_forest import RandomForest
 from models.classification.logistic_regression import LogisticRegression
 from scores.models import Request
 from scores.serializers import RequestSerializer
 
 
 class Version1(CreateAPIView):
+    """
+    Regression model: Linear Regression
+
+    return: score
+    """
+
     def create(self, request, *args, **kwargs):
         model = LinearRegression()
         score = model.predict(request.data)
@@ -17,9 +24,15 @@ class Version1(CreateAPIView):
 
 
 class Version2(CreateAPIView):
+    """
+    Regression model: Linear Regression
+    Classification model: Logistic Regression
+
+    return: score, weakest link
+    """
+
     def create(self, request, *args, **kwargs):
 
-        serializer_class = RequestSerializer()
         input_data = request.data
         if all(value == 0 for value in input_data.values()):
             return Response({'error': {
@@ -37,6 +50,40 @@ class Version2(CreateAPIView):
             return Response({'error': {
                 'status': 400,
                 'message': str(error)
+            }
+            }, status=HTTP_400_BAD_REQUEST)
+
+        return Response({'score': score, 'weakest_link': weakest_link}, status=HTTP_200_OK)
+
+
+class Version21(CreateAPIView):
+    """
+    Regression model: Random Forest
+    Classification model: Logistic Regression
+
+    return: score, weakest link
+    """
+
+    def create(self, request, *args, **kwargs):
+
+        serializer_class = RequestSerializer()
+        input_data = request.data
+        if all(value == 0 for value in input_data.values()):
+            return Response({'error': {
+                'status': 400,
+                'message': 'Input values must be larger than 0'
+            }
+            }, status=HTTP_400_BAD_REQUEST)
+
+        try:
+            regression_model = RandomForest()
+            score = regression_model.predict(input_data)
+            classification_model = LogisticRegression()
+            weakest_link = classification_model.predict(input_data)[0]
+        except ValueError:
+            return Response({'error': {
+                'status': 400,
+                'message': 'Missing values'
             }
             }, status=HTTP_400_BAD_REQUEST)
 
