@@ -1,6 +1,6 @@
 from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
-from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
+from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_201_CREATED
 
 from models.regression.linear_regression import LinearRegression
 from models.regression.random_forest import RandomForest
@@ -8,6 +8,10 @@ from models.classification.logistic_regression import LogisticRegression
 from scores.models import Request
 from scores.serializers import RequestSerializer
 
+from rest_framework.exceptions import ParseError
+from rest_framework.parsers import FileUploadParser
+from rest_framework.views import APIView
+from scores.functions import handle_video_upload  
 
 class Version1(CreateAPIView):
     """
@@ -88,6 +92,19 @@ class Version21(CreateAPIView):
             }, status=HTTP_400_BAD_REQUEST)
 
         return Response({'score': score, 'weakest_link': weakest_link}, status=HTTP_200_OK)
+
+
+class Version31(APIView):
+    parser_class = (FileUploadParser,)
+
+    def post(self, request, format=None):
+        if 'file' not in request.data:
+            raise ParseError("Missing File")
+
+        #f = request.data['file']
+        file = request.FILES['file']
+        handle_video_upload(file)
+        return Response({'file': 'http://rhtrv.com/media/video/'+file.name},status=HTTP_201_CREATED)
 
 
 def save_request(new_data, new_score):
