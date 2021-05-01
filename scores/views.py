@@ -113,7 +113,7 @@ class Version31(APIView):
         file = fs.save(file.name, file)
         fileurl = fs.url(file)
 
-        return Response({'file': fileurl},status=HTTP_201_CREATED)
+        return Response({'file': 'http://rhtrv.com:8000'fileurl},status=HTTP_201_CREATED)
 
 
 def save_request(new_data, new_score):
