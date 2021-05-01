@@ -97,14 +97,14 @@ class Version21(CreateAPIView):
 class Version31(APIView):
     parser_class = (FileUploadParser,)
 
-    def put(self, request, format=None):
+    def post(self, request, format=None):
         if 'file' not in request.data:
-            raise ParseError("Empty content")
+            raise ParseError("Missing File")
 
         #f = request.data['file']
-        f = request.FILES['file']
-        handle_video_upload(f)
-        return Response(f.name,status=HTTP_201_CREATED)
+        file = request.FILES['file']
+        handle_video_upload(file)
+        return Response({'file': 'http://rhtrv.com/media/video/'+file.name},status=HTTP_201_CREATED)
 
 
 def save_request(new_data, new_score):
