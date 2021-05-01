@@ -13,6 +13,8 @@ from rest_framework.parsers import FileUploadParser
 from rest_framework.views import APIView
 from scores.functions import handle_video_upload  
 
+from django.core.files.storage import FileSystemStorage
+
 class Version1(CreateAPIView):
     """
     Regression model: Linear Regression
@@ -103,8 +105,15 @@ class Version31(APIView):
 
         #f = request.data['file']
         file = request.FILES['file']
-        handle_video_upload(file)
-        return Response({'file': 'http://rhtrv.com/media/video/'+file.name},status=HTTP_201_CREATED)
+        #handle_video_upload(file)
+
+        fs = FileSystemStorage()
+        if fs.exists(file.name):
+            fs.delete(file.name)
+        file = fs.save(file.name, file)
+        fileurl = fs.url(file)
+
+        return Response({'file': fileurl},status=HTTP_201_CREATED)
 
 
 def save_request(new_data, new_score):
