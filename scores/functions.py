@@ -1,5 +1,5 @@
 
-def handle_video_upload(f):  
-    with open('media/video/'+f.name, 'wb+') as destination:  
-        for chunk in f.chunks():  
+def handle_video_upload(file):  
+    with open('media/video/'+file.name, 'wb+') as destination:  
+        for chunk in file.chunks():  
             destination.write(chunk)
