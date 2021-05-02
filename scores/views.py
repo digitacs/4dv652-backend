@@ -1,4 +1,5 @@
 from rest_framework.generics import CreateAPIView
+from rest_framework.generics import ListCreateAPIView
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_201_CREATED
 
@@ -6,7 +7,9 @@ from models.regression.linear_regression import LinearRegression
 from models.regression.random_forest import RandomForest
 from models.classification.logistic_regression import LogisticRegression
 from scores.models import Request
+from scores.models import CamRequest
 from scores.serializers import RequestSerializer
+from scores.serializers import CamRequestSerializer
 
 from rest_framework.exceptions import ParseError
 from rest_framework.parsers import FileUploadParser
@@ -114,6 +117,20 @@ class Version31(APIView):
         fileurl = fs.url(file)
 
         return Response({'file': 'http://rhtrv.com:8000'+fileurl},status=HTTP_201_CREATED)
+
+class Version32(ListCreateAPIView):
+
+    serializer_class = CamRequestSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data["frames"], many=True)
+        if serializer.is_valid():
+            #serializer.save()
+            #headers = self.get_success_headers(serializer.data)
+            #return Response(serializer.data, status=HTTP_201_CREATED, headers=headers)
+            return Response({'file': 'http://rhtrv.com:8000'}, status=HTTP_200_OK)
+
+        return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
 
 def save_request(new_data, new_score):

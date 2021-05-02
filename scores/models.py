@@ -103,3 +103,87 @@ class Request(models.Model):
         null=True, blank=True, max_digits=25, decimal_places=24)
     estimatedscore = models.DecimalField(
         null=True, blank=True, max_digits=25, decimal_places=24)
+
+
+class CamRequest(models.Model):
+    '''
+    Representing all requests to the API, including the input data and model outputs.
+
+    Attributes:
+        Id: Unique Id to identify requests.
+        created_at: The date when request was created.
+        score: The response of the ML algorithm: a score of how good the movement was.
+    '''
+    Id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    patient_id = models.CharField(max_length=200, default="0")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    # Input data variables
+    left_ankle_score = models.DecimalField(max_digits=27, decimal_places=24)
+    left_ankle_x = models.DecimalField(max_digits=27, decimal_places=24)
+    left_ankle_y = models.DecimalField(max_digits=27, decimal_places=24)
+
+    left_ear_score = models.DecimalField(max_digits=27, decimal_places=24)
+    left_ear_x = models.DecimalField(max_digits=27, decimal_places=24)
+    left_ear_y = models.DecimalField(max_digits=27, decimal_places=24)
+
+    left_elbow_score = models.DecimalField(max_digits=27, decimal_places=24)
+    left_elbow_x = models.DecimalField(max_digits=27, decimal_places=24)
+    left_elbow_y = models.DecimalField(max_digits=27, decimal_places=24)
+
+    left_eye_score = models.DecimalField(max_digits=27, decimal_places=24)
+    left_eye_x = models.DecimalField(max_digits=27, decimal_places=24)
+    left_eye_y = models.DecimalField(max_digits=27, decimal_places=24)
+
+    left_hip_score = models.DecimalField(max_digits=27, decimal_places=24)
+    left_hip_x = models.DecimalField(max_digits=27, decimal_places=24)
+    left_hip_y = models.DecimalField(max_digits=27, decimal_places=24)
+
+    left_knee_score = models.DecimalField(max_digits=27, decimal_places=24)
+    left_knee_x = models.DecimalField(max_digits=27, decimal_places=24)
+    left_knee_y = models.DecimalField(max_digits=27, decimal_places=24)
+
+    left_shoulder_score = models.DecimalField(max_digits=27, decimal_places=24)
+    left_shoulder_x = models.DecimalField(max_digits=27, decimal_places=24)
+    left_shoulder_y = models.DecimalField(max_digits=27, decimal_places=24)
+
+    left_wrist_score = models.DecimalField(max_digits=27, decimal_places=24)
+    left_wrist_x = models.DecimalField(max_digits=27, decimal_places=24)
+    left_wrist_y = models.DecimalField(max_digits=27, decimal_places=24)
+
+    nose_score = models.DecimalField(max_digits=27, decimal_places=24)
+    nose_x = models.DecimalField(max_digits=27, decimal_places=24)
+    nose_y = models.DecimalField(max_digits=27, decimal_places=24)
+
+    right_ankle_score = models.DecimalField(max_digits=27, decimal_places=24)
+    right_ankle_x = models.DecimalField(max_digits=27, decimal_places=24)
+    right_ankle_y = models.DecimalField(max_digits=27, decimal_places=24)
+
+    right_ear_score = models.DecimalField(max_digits=27, decimal_places=24)
+    right_ear_x = models.DecimalField(max_digits=27, decimal_places=24)
+    right_ear_y = models.DecimalField(max_digits=27, decimal_places=24)
+
+    right_elbow_score = models.DecimalField(max_digits=27, decimal_places=24)
+    right_elbow_x = models.DecimalField(max_digits=27, decimal_places=24)
+    right_elbow_y = models.DecimalField(max_digits=27, decimal_places=24)
+
+    right_eye_score = models.DecimalField(max_digits=27, decimal_places=24)
+    right_eye_x = models.DecimalField(max_digits=27, decimal_places=24)
+    right_eye_y = models.DecimalField(max_digits=27, decimal_places=24)
+
+    right_hip_score = models.DecimalField(max_digits=227, decimal_places=24)
+    right_hip_x = models.DecimalField(max_digits=27, decimal_places=24)
+    right_hip_y = models.DecimalField(max_digits=27, decimal_places=24)
+
+    right_knee_score = models.DecimalField(max_digits=27, decimal_places=24)
+    right_knee_x = models.DecimalField(max_digits=27, decimal_places=24)
+    right_knee_y = models.DecimalField(max_digits=27, decimal_places=24)
+
+    right_shoulder_score = models.DecimalField(max_digits=27, decimal_places=24)
+    right_shoulder_x = models.DecimalField(max_digits=27, decimal_places=24)
+    right_shoulder_y = models.DecimalField(max_digits=27, decimal_places=24)
+
+    right_wrist_score = models.DecimalField(max_digits=27, decimal_places=24)
+    right_wrist_x = models.DecimalField(max_digits=27, decimal_places=24)
+    right_wrist_y = models.DecimalField(max_digits=27, decimal_places=24)
