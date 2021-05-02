@@ -99,7 +99,7 @@ class Version21(CreateAPIView):
         return Response({'score': score, 'weakest_link': weakest_link}, status=HTTP_200_OK)
 
 
-class Version31(APIView):
+class UploadFile(APIView):
     parser_class = (FileUploadParser,)
 
     def post(self, request, format=None):
@@ -118,7 +118,7 @@ class Version31(APIView):
 
         return Response({'file': 'http://rhtrv.com:8000'+fileurl},status=HTTP_201_CREATED)
 
-class Version32(ListCreateAPIView):
+class PoseNetFrames(ListCreateAPIView):
 
     serializer_class = CamRequestSerializer
 
