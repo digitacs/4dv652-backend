@@ -10,6 +10,7 @@ from scores.models import Request
 from scores.models import CamRequest
 from scores.serializers import RequestSerializer
 from scores.serializers import CamRequestSerializer
+from scores.serializers import FrameSerializer
 
 from rest_framework.exceptions import ParseError
 from rest_framework.parsers import FileUploadParser
@@ -17,6 +18,11 @@ from rest_framework.views import APIView
 from scores.functions import handle_video_upload  
 
 from django.core.files.storage import FileSystemStorage
+import mlflow
+import gs
+import google.cloud
+import os
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"]= "mlflow-312506-6387830e8324.json"
 
 class Version1(CreateAPIView):
     """
@@ -120,17 +126,35 @@ class UploadFile(APIView):
 
 class PoseNetFrames(ListCreateAPIView):
 
-    serializer_class = CamRequestSerializer
+    serializer_class = FrameSerializer
 
     def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data["frames"], many=True)
-        if serializer.is_valid():
-            #serializer.save()
-            #headers = self.get_success_headers(serializer.data)
-            #return Response(serializer.data, status=HTTP_201_CREATED, headers=headers)
-            return Response({'file': 'http://rhtrv.com:8000'}, status=HTTP_200_OK)
+        frames = []
+        for i in request.data["frames"]:
+            serializer = self.get_serializer(data=i, many=True)
+            if serializer.is_valid():
+                frames.append(serializer.data)
+            else:
+                return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+        
+        """
+        Uncomment to see what we get and what we are forwarding to mlflow.
+        """
+        #return Response({'file':frames}, status=HTTP_200_OK)
 
-        return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+
+        try:
+            kinect3D_model = mlflow.keras.load_model('gs://mlflow-atlas/mlflow_artifacts/0/cbca4a49c97a4f0a9e100a90658a5cb6/artifacts/kinect3D')
+            predictions = kinect3D_model.predict(frames)
+        except ValueError:
+            return Response({'error': {
+                'status': 400,
+                'message': "Unable to handle prediction"
+            }
+            }, status=HTTP_400_BAD_REQUEST)
+
+        return Response({'file':predictions}, status=HTTP_200_OK)
+
 
 def save_request(new_data, new_score):
     """

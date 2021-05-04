@@ -1,7 +1,6 @@
 import uuid
 from django.db import models
 
-
 class Request(models.Model):
     '''
     Representing all requests to the API, including the input data and model outputs.
@@ -187,3 +186,11 @@ class CamRequest(models.Model):
     right_wrist_score = models.DecimalField(max_digits=27, decimal_places=24)
     right_wrist_x = models.DecimalField(max_digits=27, decimal_places=24)
     right_wrist_y = models.DecimalField(max_digits=27, decimal_places=24)
+
+class Position(models.Model):
+    x = models.DecimalField(max_digits=27, decimal_places=24)
+    y = models.DecimalField(max_digits=27, decimal_places=24)
+
+class Frame(models.Model):
+    score = models.DecimalField(max_digits=27, decimal_places=24)
+    part = models.CharField(max_length=50)

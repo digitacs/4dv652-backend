@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "mlflow-312506",
+  "private_key_id": "6387830e83246c5eccf91fb162cb376419a81790",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCfirvryPsQsKWP\neHWHgsXY9tXVCDz4sUJqw1zUKr/mpA0R0FaiuQmr9dhHY1kgg9/q/G3bT8EboN4u\nfjbNX3cr8Df3EtcgZMy/cIS9ej0uJFr34ZExMGPC9BtRmt5rSsGqUJW0l/zFIBiI\nhiDVndakL50WezAAU3+KrVAmim3jIfu8PuIUFgi758R0uScPT1mj6h0z+1j6GvWp\n6AGBTljqihzaQrQUpFRp5/SyJx4URS+/axUpYVmOkcU0r21ZMyncwdOusicOX0SW\nn8q8DdcRB7uFbcjeH7uhflCvh0QqFMIt6Z7HWHv/mV1s8wjQ7rf5FuJ+CAi1l5Xy\n5aWftW0xAgMBAAECggEACVOw/MMjz6v5YdPRpc8YBevC6yYEz9J9EYTDo9uumwCI\nNbxk9DULwwknpbTB0cwj27b6LSdny1eyOtbsw+uK1KoXJiiXJFuq5J44BGO7DpGC\n3URLRVbmM3rV21rJxKKlg8bGRGfbl81H4eNa1Aza2X+3F/NdBl0wnZ4ti13tt/4o\nPo1ceI/nqk9hkCusZFmPvzAXoF6eQdNOQwxfSLBKDC9R+FqPQQJIAH0w5VfmyLeO\nkO2PJAW+nuwpbhDmCMj2WMyZw4sslUEgEqUvoAi4I9t3xrdz1Wz4fReZE1cfikle\nU9JJQRKuJSf+2ADsMH1D0F7BNdHHizqYTXAWe1dz4QKBgQDZy/NiVltqLySrNCuB\nVxGmMiCSvUIcCr4RXeLELFzQuMMAJOAgIuAa/AwCdEf/m7t+U7hsXb7xez32Tr9k\nRlnJ7ZYah/c/DPFf962BCNyMY8hQ2ci7NCLDnm/FrgSmAFVaNCrhr3UplHqclREF\nYpAFP67AM4lEjy29pM8duxvF/QKBgQC7huIgVLYa57KUt1x6BP7An9AfqJj9eStw\n5txqB1SBnVoC2YUryFOApk6aAcWKrH/DS538Y8kSui9kMp9EyPi0DRYU0LIT8V42\nsCVRgL6fDQuuDgHNxbsA30gKExebQzYT1vWAa9wRnc2MPFjvg6eCSKAcSJpLAmlu\nSSl3wuJQRQKBgBKvzA8Y57kBmHzT+hOb29jNnjvY3y42wb4NtyIryD7kS17cyxoW\nw/GsxH8FaRQGUZzyI/WwSWzArT1P3l4FJzkLGIDoP496Vc9tGcbjcsDc4tgFB5MA\nUydDlcV5O87eYnRd23wHqN7LbYW3yIEUxtScdSrqgRGP01XdKSQc5LIlAoGAa5Lt\nxvQxXu/JHsyszQZuiVtkDbUuxkErLWIR0PURgiUczIOxhDMvy54bevdHNczMoeCP\n6YfogciyhP0RJmlPWiIjp58seIo+rIqRbda4Aw99wsQgPsWOB+sOLVFUemms7Oak\nAJ5fKO/oSOkZb5SLlA5LYs43TI4+othvZFc0ci0CgYEAvsEPpdWSNUK7KVdavZGq\nHnyhrmeeLqe9i/SAASgXnVSI1xo3Ik9VU9A3jLj2t6WNONueqtDHfp0Z60sQOgYa\nWJONeB5gc7ZR/Td4/PECf+0pmPzoSK4vxpzXZiREy4Iqh1e5LeRPbHVa80Mg8/gG\nnNdFxjiLATquSPOaTqhRDJk=\n-----END PRIVATE KEY-----\n",
+  "client_email": "mlflow-tracking-sa@mlflow-312506.iam.gserviceaccount.com",
+  "client_id": "117278527067814105811",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/mlflow-tracking-sa%40mlflow-312506.iam.gserviceaccount.com"
+}
