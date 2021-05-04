@@ -18,8 +18,6 @@ from scores.functions import handle_video_upload
 
 from django.core.files.storage import FileSystemStorage
 
-from scores.functions import tf_version
-
 class Version1(CreateAPIView):
     """
     Regression model: Linear Regression
@@ -133,21 +131,6 @@ class PoseNetFrames(ListCreateAPIView):
             return Response({'file': 'http://rhtrv.com:8000'}, status=HTTP_200_OK)
 
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
-
-class TensorFlowVersion(CreateAPIView):
-
-    def get(self, request, *args, **kwargs):
-        
-        try:
-            version = tf_version()
-        except ValueError:
-            return Response({'error': {
-                'status': 400,
-                'message': 'PostNet Error'
-            }
-            }, status=HTTP_400_BAD_REQUEST)
-
-        return Response({'version': version}, status=HTTP_200_OK)
 
 def save_request(new_data, new_score):
     """
