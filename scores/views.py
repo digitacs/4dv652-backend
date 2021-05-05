@@ -18,10 +18,16 @@ from rest_framework.views import APIView
 from scores.functions import handle_video_upload  
 
 from django.core.files.storage import FileSystemStorage
+import json
 import mlflow
 import gs
 import google.cloud
 import os
+import numpy as np
+import pandas as pd
+import re
+from sklearn.preprocessing import StandardScaler
+
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"]= "mlflow-312506-6387830e8324.json"
 
 class Version1(CreateAPIView):
@@ -129,31 +135,40 @@ class PoseNetFrames(ListCreateAPIView):
     serializer_class = FrameSerializer
 
     def create(self, request, *args, **kwargs):
-        frames = []
-        for i in request.data["frames"]:
-            serializer = self.get_serializer(data=i, many=True)
-            if serializer.is_valid():
-                frames.append(serializer.data)
-            else:
-                return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
-        
-        """
-        Uncomment to see what we get and what we are forwarding to mlflow.
-        """
-        #return Response({'file':frames}, status=HTTP_200_OK)
+        frames = request.data["frames"]
+        kinect3D_model = mlflow.keras.load_model('gs://mlflow-atlas/mlflow_artifacts/0/cbca4a49c97a4f0a9e100a90658a5cb6/artifacts/kinect3D')
+        dataset = pd.DataFrame(frames)
 
+        # remove score columns
+        for c in dataset.columns:
+                if re.search("^.*_score$", c):
+                    dataset.drop(columns=[c], inplace=True)
 
-        try:
-            kinect3D_model = mlflow.keras.load_model('gs://mlflow-atlas/mlflow_artifacts/0/cbca4a49c97a4f0a9e100a90658a5cb6/artifacts/kinect3D')
-            predictions = kinect3D_model.predict(frames)
-        except ValueError:
-            return Response({'error': {
-                'status': 400,
-                'message': "Unable to handle prediction"
-            }
-            }, status=HTTP_400_BAD_REQUEST)
+        # set head position based on nose positions
+        dataset['head_x'] = dataset['nose_x']
+        dataset['head_y'] = dataset['nose_y']
 
-        return Response({'file':predictions}, status=HTTP_200_OK)
+        # Drop extar columns
+        dataset.drop(columns=[
+            'nose_x',
+            'nose_y',
+            'right_ear_x',
+            'right_ear_y',
+            'left_ear_x',
+            'left_ear_y',
+            'right_eye_x',
+            'right_eye_y',
+            'left_eye_x',
+            'left_eye_y'
+        ], inplace=True)
+
+        # fix scales
+        scaler = StandardScaler()
+        scaled_dataset = scaler.fit_transform(dataset)
+
+        predictions = kinect3D_model.predict(dataset)
+
+        return Response(scaled_dataset, status=HTTP_200_OK)
 
 
 def save_request(new_data, new_score):
